@@ -1,0 +1,5 @@
+Hola <%= @user.name %>
+
+    Gracias por registrarse en la página, para activar su cuenta, favor ingresar a la siguiente URL
+    
+    <%= confirm_email_user_url(@user.confirm_token) %>
