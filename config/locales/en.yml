@@ -18,6 +18,10 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  unauthorized:
+    manage:
+      all:  "Sr. Usuario, usted no tiene los permisos requeridos."
+      user: "%{user} No se permite administrar otras cuentas de usuario."
+    update:
+      project: "No tiene los permisos para actualizar en el proyecto."

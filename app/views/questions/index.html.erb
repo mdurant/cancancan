@@ -1,27 +1,44 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Questions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @questions.each do |question| %>
-      <tr>
-        <td><%= question.content %></td>
-        <td><%= link_to 'Show', question %></td>
-        <td><%= link_to 'Edit', edit_question_path(question) %></td>
-        <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<h1>Forum</h1>
+<div class = "alert">
+  <%= flash[:alert] %>
+</div>
+<%= link_to 'Nueva Pregunta', new_question_path %>
+<br>
 <br>
 
-<%= link_to 'New Question', new_question_path %>
+<% @questions.each do |question| %>
+
+  <div style="border: 1px solid black; background-color: #add8e6;">
+
+    <h3><%= question.content %></h3>
+    <%= time_ago_in_words(question.created_at) %> hace por <%= question.user.email %>
+
+    <br>
+    <!-- aca empiezo a utilizar cancancan  -->
+    <% if can? :update, question %>
+      <%= link_to 'Editar', edit_question_path(question) %>
+    <% end %>
+    <% if can? :destroy, question %>
+      <%= link_to 'Eliminar', question, method: :delete, data: { confirm: '¿Está seguro?' } %>
+    <% end %>
+    <!-- fin de uso cancancan -->
+    
+    <% if question.answers.any? %>
+      <h4>Answers</h4>
+      <%= render question.answers %>
+    <% end %>
+
+    <hr>
+    
+    <p>Agregar Respuesta</p>
+    <%= form_for([question, question.answers.build]) do |f| %>
+      <%= f.text_area :content %>
+      <%= submit_tag "Agregar" %>
+    <% end %>
+
+  </div>
+
+  <br>
+  <br>
+
+<% end %>

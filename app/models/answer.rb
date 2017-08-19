@@ -1,4 +1,4 @@
 class Answer < ActiveRecord::Base
-    belong_to :question
-    belong_to :user
+    belongs_to :question
+    belongs_to :user
 end
