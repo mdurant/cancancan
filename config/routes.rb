@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root 'home#index'
   
   #get 'home/index'
@@ -6,13 +7,8 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers
   end
-  resources :users do 
-    member do
-      get :confirm_email
-    end
-  end
   
-  devise_for :users
+  devise_for :users, controllers: { confirmations: 'confirmations' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
